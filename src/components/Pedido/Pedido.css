@@ -1,0 +1,21 @@
+.Pedido {
+    width: 400px;
+    padding: 16px;
+    text-align: center;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 3px #ccc;
+    margin: 10px;
+   
+    cursor: pointer;
+}
+
+.Pedido:hover,
+.Pedido:active {
+    background-color:rgb(67, 71, 80);
+    color: rgb(255, 255, 255);
+}
+
+.Price {
+    font-size: large;
+    color: rgb(247, 71, 71);;
+}

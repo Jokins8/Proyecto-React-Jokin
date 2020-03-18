@@ -1,0 +1,11 @@
+.Posts {
+    background-color: rgb(211, 211, 211);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    width: 80%;
+    margin: auto;
+}
+nav .navbar-nav li a{
+    color: white !important;
+    }
