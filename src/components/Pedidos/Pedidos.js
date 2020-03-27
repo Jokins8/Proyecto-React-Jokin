@@ -4,7 +4,7 @@ import axios from 'axios';
 import PedidoFull from '../PedidoFull/PedidoFull';
 import Pedido from '../Pedido/Pedido';
 
-import { Container } from 'react-bootstrap';
+import { Container} from 'react-bootstrap';
 import './Pedidos.css';
 
 
@@ -15,8 +15,8 @@ class Pedidos extends React.Component {
     state = {
         selectedPostId: null,
         pedidos: [],
-        error: false
-
+        error: false,
+        setShow: false
     }
 
 
@@ -34,14 +34,45 @@ class Pedidos extends React.Component {
                 console.log(pedidos);
                 this.setState({ pedidos: pedidos });
             })
-
     }
 
     postSelectedHandler = (id) => {
         this.setState({ selectedPostId: id });
     }
 
+    handleClose = () => this.setState({ setShow: false });
+    handleShow = () => this.setState({ setShow: true });
+
+    deleteDataHandler = (key) => {
+
+        axios.delete('https://bolsosreact.firebaseio.com/Pedidos/' + key + '.json')
+            .then(response => {
+               alert("Pedido eliminado, refresque la página para observar los cambios.");    
+            });
+        //if (key < this.state.pedidos.length) {
+        //  console.log("Es menor cuidado");
+        // let nextkey=this.state.pedidos.length;
+        //console.log(nextkey);
+        //console.log(key);
+
+        //  axios.patch('https://bolsosreact.firebaseio.com/Pedidos/' + nextkey + '.json', {idb:key})
+
+        //}
+        this.setState({ setShow: false });
+    }
+
     render() {
+        //Actualizo el array de pedidos para no mostrar los que son solo idb (por eliminar entre medias)
+        for (let i = 0; i < this.state.pedidos.length; i++) {
+            if (this.state.pedidos[i].Nombre === undefined) {
+                let ped = [];
+                ped = this.state.pedidos;
+                ped.splice(i, 1);
+                this.setState({ pedidos: ped });
+            }
+        }
+
+
         let pedidos = <p style={{ textAlign: 'center' }}>Something went wrong!</p>;
         if (!this.state.error) {
             pedidos = this.state.pedidos.map(pedido => {
@@ -51,7 +82,12 @@ class Pedidos extends React.Component {
                     Apellidos={pedido.Apellidos}
                     Desembolso={pedido.Desembolso}
 
+
                     clicked={() => this.postSelectedHandler(pedido.idb)}
+                    modalclose={() => this.handleClose()}
+                    modalopen={() => this.handleShow()}
+                    eliminar={() => this.deleteDataHandler(pedido.idb)}
+                    setShow={this.state.setShow}
 
                 />;
             });
@@ -60,8 +96,8 @@ class Pedidos extends React.Component {
         return (
 
             <Container>
-                <h1>Pedidos Realizados:</h1>
-                <br/>
+
+                <br />
                 <section className="Pedidos">
                     {pedidos}
                 </section>

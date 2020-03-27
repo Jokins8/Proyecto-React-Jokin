@@ -1,4 +1,4 @@
-.Posts {
+.Tienda {
     background-color: rgb(211, 211, 211);
     display: flex;
     flex-flow: row wrap;
@@ -8,4 +8,31 @@
 }
 nav .navbar-nav li a{
     color: white !important;
+}
+
+.footer{
+    background-color: #263238;
+    text-align: center;
+    color: whitesmoke;
+   
+   
+}
+
+a:link {
+    color: rgb(196, 196, 196);
+    }
+    a:visited {
+    color: #999999;
+    }
+    a:hover {
+    color:rgb(179, 171, 171);
+    }
+
+    .navbar-brand {
+       
+        width: 120%;
+       
+        text-align: center;
+        
+        
     }

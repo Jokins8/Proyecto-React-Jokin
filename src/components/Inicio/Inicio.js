@@ -23,8 +23,9 @@ class Inicio extends React.Component {
         setShow: false,
         titulos: ['', '', ''],
         pedidos: [],
-        numeropedido: null
-        //ttlShow:false
+        numeropedido: null,
+        t: false
+
 
     }
 
@@ -40,7 +41,7 @@ class Inicio extends React.Component {
                     });
                 }
                 productos = productos.slice(1);
-                console.log(productos);
+                //console.log(productos);
                 this.setState({ productos: productos });
             })
 
@@ -55,7 +56,7 @@ class Inicio extends React.Component {
                     });
                 }
                 pedidos = pedidos.slice(1);
-                console.log(pedidos);
+               // console.log(pedidos);
                 this.setState({ pedidos: pedidos });
             })
     }
@@ -74,8 +75,6 @@ class Inicio extends React.Component {
         let ttl = this.state.titulos;
         ttl[newid] = nom;
         this.setState({ titulos: ttl });
-
-        this.setState({ ttlShow: true });
 
     }
 
@@ -109,7 +108,7 @@ class Inicio extends React.Component {
         let numeropedido = this.state.pedidos.length;
         numeropedido = numeropedido + 1;
         this.setState({ numeropedido: numeropedido });
-
+        console.log(numeropedido);
         //Introducimos los primeros datos del pedido
         axios.put('https://bolsosreact.firebaseio.com/Pedidos/' + numeropedido + '.json', data)
 
@@ -122,7 +121,7 @@ class Inicio extends React.Component {
 
     render() {
 
-        console.log(this.state.cantidadbolsos);
+        //console.log(this.state.cantidadbolsos);
         let productos = this.state.productos.map(producto => {
             return <Productos
                 key={producto.idb}
@@ -135,7 +134,16 @@ class Inicio extends React.Component {
                 restar={() => this.restarSelectedHandler(producto.idb, producto.Precio)}
             />;
         });
-
+        
+        if(this.state.productos[0] !== undefined && this.state.t===false){
+            let tit=this.state.titulos;
+            tit[0]=this.state.productos[0].Nombre;
+            tit[1]=this.state.productos[1].Nombre;
+            tit[2]=this.state.productos[2].Nombre;
+            this.setState({titulos : tit});
+            this.setState({t : true});
+        }
+     
 
         return (
             <Container>
@@ -166,9 +174,9 @@ class Inicio extends React.Component {
                                 <h1>=</h1>
                             </Col>
                             <Col className="align-baseline" md={2}>
-                                <p>
+                               
                                     <h1>{this.state.totalcarrito}€</h1>
-                                </p>
+                              
                             </Col>
                         </Row >
                         <br />
@@ -182,18 +190,18 @@ class Inicio extends React.Component {
                                 </Modal.Header>
                                 <Modal.Body >
                                     <Container >
-
+                                   
                                         <Row className="justify-content-md-center">
-                                            <p class="font-italic"> Bolso {this.state.titulos[0]} x {this.state.cantidadbolsos[0]}</p>
+                                            <p className="font-italic"> Bolso {this.state.titulos[0]} x {this.state.cantidadbolsos[0]}</p>
                                         </Row>
                                         <Row className="justify-content-md-center">
-                                            <p class="font-italic"> Bolso {this.state.titulos[1]} x {this.state.cantidadbolsos[1]}</p>
+                                            <p className="font-italic"> Bolso {this.state.titulos[1]} x {this.state.cantidadbolsos[1]}</p>
                                         </Row>
                                         <Row className="justify-content-md-center">
-                                            <p class="font-italic"> Neceser {this.state.titulos[2]} x {this.state.cantidadbolsos[2]}</p>
+                                            <p className="font-italic"> Neceser {this.state.titulos[2]} x {this.state.cantidadbolsos[2]}</p>
                                         </Row>
                                         <Row className="justify-content-md-center">
-                                            <p class="font-weight-bold">Total del pedido: {this.state.totalcarrito} €</p>
+                                            <p className="font-weight-bold">Total del pedido: {this.state.totalcarrito} €</p>
                                         </Row>
                                     </Container>
 
@@ -206,9 +214,9 @@ class Inicio extends React.Component {
                                         <NavLink
                                             to="/Formulario/"
                                             exact
-                                            activeClassName="my-active"
-                                            activeStyle={{
-                                                color: 'red'
+                                            activeclassname="my-active"
+                                            activestyle={{
+                                                color: 'black'
                                             }}>Continuar</NavLink>
                                     </Button>
                                 </Modal.Footer>

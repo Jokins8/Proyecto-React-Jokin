@@ -52,9 +52,10 @@ class Formulario extends React.Component {
     }
 
 
+
     handleSavePedidoFinal = () => {
         if (this.state.Nombre !== '') {
-            console.log(this.state.pedido);
+            //console.log(this.state.pedido);
             //Creamos data con todos los datos que meteremos del pedido 
             const data = {
 
@@ -74,7 +75,7 @@ class Formulario extends React.Component {
             };
 
 
-            //Introducimos los primeros datos del pedido
+            //Introducimos los datos del pedido
             let indicepedido = this.state.pedidos.length;
 
             axios.put('https://bolsosreact.firebaseio.com/Pedidos/' + indicepedido + '.json', data)
